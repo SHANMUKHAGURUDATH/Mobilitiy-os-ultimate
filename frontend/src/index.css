@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0f1a;
+  --color-surface: #121a2c;
+  --color-surface-raised: #1a2438;
+  --color-grid: #223052;
+  --color-signal: #2dd4c8;
+  --color-signal-dim: #1c8b83;
+  --color-amber: #f5a623;
+  --color-red: #e5484d;
+  --color-text: #e8ecf4;
+  --color-muted: #7c8aa3;
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+/* radar sweep animation */
+@keyframes sweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.radar-sweep {
+  animation: sweep 6s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.6); }
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 1.5px solid currentColor;
+  animation: pulse-dot 2.2s ease-out infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 22s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-sweep, .pulse-ring::after, .ticker-track {
+    animation: none !important;
+  }
+}
+
+.leaflet-container {
+  background: #0d1526 !important;
+  font-family: var(--font-sans);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: var(--color-grid); border-radius: 4px; }
